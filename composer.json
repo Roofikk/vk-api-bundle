@@ -1,0 +1,33 @@
+{
+    "name": "roofikk/vk-api-bundle",
+    "type": "symfony-bundle",
+    "description": "",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*",
+        "symfony/config": "^5.1",
+        "symfony/dependency-injection": "^5.1",
+        "symfony/http-kernel": "^5.1",
+        "symfony/yaml": "^5.1",
+        "symfony/http-client": "^5.1",
+        "symfony/http-foundation": "^5.1"
+    },
+    "require-dev": {
+        "symfony/console": "^5.1",
+        "symfony/phpunit-bridge": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "roofikk\\VkApiBundle\\": "."
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "roofikk\\VkApiBundle\\Tests\\": "Tests"
+        }
+    },
+    "scripts": {
+        "test" : "./vendor/bin/simple-phpunit"
+    }
+}
