@@ -38,6 +38,11 @@ class VkApiClient
         $this->accessToken = $token;
     }
 
+    public function testFunc()
+    {
+        var_dump('Hello from bundle');
+    }
+
     public function validate(string $address)
     {
 
