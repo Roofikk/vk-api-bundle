@@ -33,7 +33,7 @@ class VkApiAuth
         $this->client = HttpClient::create([]);
     }
 
-    protected function authorize()
+    public function authorize()
     {
         $oauth = new VKOAuth('5.130');
         $client_id = $this->clientId;
@@ -54,7 +54,7 @@ class VkApiAuth
         var_dump($browser_url);
     }
 
-    protected function get_access_token(string $get_code)
+    public function get_access_token(string $get_code)
     {
         $oauth = new VKOAuth();
         $client_id = $this->clientId;
