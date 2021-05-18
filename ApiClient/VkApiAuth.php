@@ -51,7 +51,7 @@ class VkApiAuth
 //            ],
 //        ]);
 
-        var_dump($browser_url);
+        return $browser_url;
     }
 
     public function get_access_token(string $get_code)
