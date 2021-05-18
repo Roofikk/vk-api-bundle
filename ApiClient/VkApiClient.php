@@ -58,7 +58,6 @@ class VkApiClient
     public function wallPostWithPict($group_id, $array_files)
     {
         $server = $this->getWallUploadServer($group_id);
-        var_dump($server['upload_url']);
         $client = HttpClient::create();
         for($i = 0; $i < count($array_files); ++$i)
         {
@@ -71,7 +70,6 @@ class VkApiClient
         }
 
         var_dump($response->getStatusCode());
-        var_dump($response->getContent());
         return $response;
     }
 
