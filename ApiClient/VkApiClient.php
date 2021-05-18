@@ -16,6 +16,8 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 use VK\Client\VKApiClient as OtherVkApiClient;
 
 use roofikk\VkApiBundle\Dto\AddressDto;
@@ -61,11 +63,14 @@ class VkApiClient
         $client = HttpClient::create();
         for($i = 0; $i < count($array_files); ++$i)
         {
-            $content = $this->initFile($array_files[$i]);
+            $formFields = [
+                'regular_field' => 'some value',
+                'file_field' => DataPart::fromPath($array_files[$i]),
+            ];
+            $formData = new FormDataPart($formFields);
+
             $response = $client->request('POST', $server['upload_url'], [
-                'query' => [
-                    'photo' => $content,
-                ]
+                'body' => $formData->bodyToIterable(),
             ]);
         }
 
