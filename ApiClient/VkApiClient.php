@@ -70,7 +70,8 @@ class VkApiClient
             ]);
         }
 
-        var_dump($response);
+        var_dump($response->getStatusCode());
+        var_dump($response->getContent());
         return $response;
     }
 
