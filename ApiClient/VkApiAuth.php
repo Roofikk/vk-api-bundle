@@ -35,7 +35,7 @@ class VkApiAuth
 
     public function get_token()
     {
-        $this->autorize();
+        $this->authorize();
     }
 
     protected function authorize()
