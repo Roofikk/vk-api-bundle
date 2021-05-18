@@ -62,7 +62,7 @@ class VkApiClient
         for($i = 0; $i < count($array_files); ++$i)
         {
             $content = $this->initFile($array_files[$i]);
-            $response = $client->request('GET', $server['upload_url'], [
+            $response = $client->request('POST', $server['upload_url'], [
                 'query' => [
                     'photo' => $content,
                 ]
