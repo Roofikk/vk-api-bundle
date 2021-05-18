@@ -35,7 +35,7 @@ class VkApiAuth
 
     public function get_token()
     {
-        $this->authorize();
+        return $this->authorize();
     }
 
     protected function authorize()
@@ -47,9 +47,9 @@ class VkApiAuth
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
         $state = 'secret_state_code';
 
-        $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
+        return $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
 
-        $response = $this->client->request('GET', $browser_url);
+        #$response = $this->client->request('GET', $browser_url);
 
         #var_dump($response);
     }
