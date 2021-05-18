@@ -59,7 +59,11 @@ class VkApiClient
         if ($group_id > 0)
             $group_id = $group_id * -1;
 
-        $response = $vk->photos()->getWallUploadServer($group_id);
+        $params = [
+            'group_id' => $group_id,
+        ];
+
+        $response = $vk->photos()->getWallUploadServer($access_token ,$params);
         return $response;
     }
 
