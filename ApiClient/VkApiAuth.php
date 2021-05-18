@@ -41,7 +41,7 @@ class VkApiAuth
         $display = VKOAuthDisplay::PAGE;
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
         $state = 'secret_state_code';
-        $revoke_auth = true;
+        $revoke_auth = false;
 
         $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, null, $revoke_auth);
 
