@@ -38,7 +38,7 @@ class VkApiAuth
         $this->autorize();
     }
 
-    protected function autorize()
+    protected function authorize()
     {
         $oauth = new VKOAuth();
         $client_id = 7854063;
