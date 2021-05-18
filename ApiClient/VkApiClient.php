@@ -38,6 +38,21 @@ class VkApiClient
         $this->accessToken = $token;
     }
 
+    public function wall_post($owner_id, string $message)
+    {
+        $vk = new VKApiClient('5.130');
+        $access_token = $this->accessToken;
+        $params = [
+            'owner_id' => $owner_id,
+            'message' => $message,
+            'friends_only' => '0',
+            'from_group' => '1',
+        ];
+        $response = $vk->wall()->post($access_token, $params);
+
+        return $response;
+    }
+
     public function validate(string $address)
     {
 
