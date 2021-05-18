@@ -72,7 +72,7 @@ class VkApiClient
 
             $response = $client->request('POST', $server['upload_url'], [
                 'body' =>[
-                    'file1' => $formData->bodyToIterable(),
+                    'photo' => $array_files[$i],
                 ]
             ]);
         }
