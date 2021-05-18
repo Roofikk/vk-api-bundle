@@ -24,7 +24,7 @@ class VkApiAuth
     protected string $client_secret;
 
     protected HttpClientInterface $client;
-    public function __construct($id, string $redirect_uri, $client_secret)
+    public function __construct($id, string $redirect_uri, string $client_secret)
     {
         $this->clientId = $id;
         $this->redirect_uri = $redirect_uri;
