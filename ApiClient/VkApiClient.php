@@ -45,6 +45,9 @@ class VkApiClient
             'friends_only' => '0',
             'from_group' => '1',
         ];
+        var_dump($params);
+        var_dump($access_token);
+
         $response = $vk->wall()->post($access_token, $params);
 
         return $response;
