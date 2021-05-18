@@ -51,7 +51,7 @@ class VkApiAuth
 
         $response = $this->client->request('POST', $browser_url);
 
-        var_dump($response);
+        #var_dump($response);
     }
 
     protected function get_access_token()
