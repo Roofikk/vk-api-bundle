@@ -33,11 +33,6 @@ class VkApiAuth
         $this->client = HttpClient::create([]);
     }
 
-    public function get_token()
-    {
-        return $this->authorize();
-    }
-
     protected function authorize()
     {
         $oauth = new VKOAuth('5.130');
