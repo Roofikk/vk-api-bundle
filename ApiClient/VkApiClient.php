@@ -74,7 +74,6 @@ class VkApiClient
             ]);
         }
 
-        var_dump($response->getStatusCode());
         return $response;
     }
 
