@@ -47,11 +47,11 @@ class VkApiAuth
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
         $state = 'secret_state_code';
 
-        return $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
+        $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
 
-        #$response = $this->client->request('GET', $browser_url);
+        $response = $this->client->request('GET', $browser_url);
 
-        #var_dump($response);
+        var_dump($response);
     }
 
     protected function get_access_token()
