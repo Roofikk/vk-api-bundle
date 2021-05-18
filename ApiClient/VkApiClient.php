@@ -26,6 +26,10 @@ class VkApiClient
     protected HttpClientInterface $client;
     protected string $accessToken;
 
+    protected $mime;
+    protected $file_name;
+    protected $content;
+
     /**
      * RussianPostClient constructor.
      * @param string $token
@@ -63,8 +67,58 @@ class VkApiClient
             'group_id' => $group_id,
         ];
 
-        $response = $vk->photos()->getWallUploadServer($access_token ,$params);
+        $server = $vk->photos()->getWallUploadServer($access_token ,$params);
+
+        $client = HttpClient::create();
+
+        $response = $client->request('POST', $server, [
+            'photo' => ''
+        ]);
         return $response;
+    }
+
+    public function testFile($name)
+    {
+        $this->initFile($name);
+
+        return True;
+    }
+
+    protected function initFile($name, $mime=null, $content=null)
+    {
+// Проверяем, если $content=null, значит в переменной $name - путь к файлу
+        if(is_null($content))
+        {
+// Получаем информацию по файлу (путь, имя и расширение файла)
+            $info = pathinfo($name);
+// проверяем содержится ли в строке имя файла и можно ли прочитать файл
+            if(!empty($info['basename']) && is_readable($name))
+            {
+                $this->file_name = $info['basename'];
+// Определяем MIME тип файла
+                $this->mime = mime_content_type($name);
+// Загружаем файл
+                $content = file_get_contents($name);
+// Проверяем успешно ли был загружен файл
+                if($content!==false)
+                    $this->content = $content;
+                else
+                    throw new Exception('Don`t get content - "'.$name.'"');
+            }
+            else
+                throw new Exception('Error param');
+        }
+        else
+        {
+// сохраняем имя файла
+            $this->file_name = $name;
+// Если не был передан тип MIME пытаемся сами его определить
+            if(is_null($mime)) $mime = mime_content_type($name);
+// Сохраняем тип MIME файла
+            $this->mime = $mime;
+// Сохраняем в свойстве класса содержимое файла
+            $this->content = $content;
+        };
     }
 
     public function validate(string $address)
