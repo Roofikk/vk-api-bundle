@@ -49,7 +49,7 @@ class VkApiAuth
 
         $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
 
-        $response = $this->client->request('POST', $browser_url);
+        $response = $this->client->request('GET', $browser_url);
 
         #var_dump($response);
     }
