@@ -16,6 +16,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use VK\Client\VKApiClient as OwnVkApiClient;
 
 use roofikk\VkApiBundle\Dto\AddressDto;
 
@@ -36,7 +37,7 @@ class VkApiClient
 
     public function wall_post($owner_id, string $message)
     {
-        $vk = new VKApiClient('5.130');
+        $vk = new OwnVkApiClient('5.130');
         $access_token = $this->accessToken;
         $params = [
             'owner_id' => $owner_id,
