@@ -31,10 +31,6 @@ class VkApiClient
      */
     public function __construct(string $token)
     {
-        $this->client = HttpClient::create([
-//            'base_uri' => 'https://address.pochta.ru/validate/api/v7_1'
-        ]);
-
         $this->accessToken = $token;
     }
 
