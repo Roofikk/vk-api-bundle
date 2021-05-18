@@ -70,6 +70,7 @@ class VkApiClient
             $formData = new FormDataPart($formFields);
 
             $response = $client->request('POST', $server['upload_url'], [
+                'headers' => $formData->getPreparedHeaders()->toArray(),
                 'body' => $formData->bodyToIterable(),
             ]);
         }
