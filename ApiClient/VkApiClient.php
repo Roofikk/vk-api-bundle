@@ -55,7 +55,22 @@ class VkApiClient
         return $response;
     }
 
-    public function getWallUploadServer($group_id)
+    public function wallPostWithPict($group_id, $array_files)
+    {
+        $server = getWallUploadServer($group_id);
+        $client = HttpClient::create();
+        for($i = 0; $i < count($array_files); ++$i)
+        {
+            $content = $this->initFile($array_files[$i]);
+            $response = $client->request('POST', $server, [
+                'photo' => $content,
+            ]);
+        }
+
+        return $response;
+    }
+
+    public function getWallUploadServer($group_id, $fine_name)
     {
         $vk = new OtherVkApiClient('5.130');
         $access_token = $this->accessToken;
@@ -69,20 +84,15 @@ class VkApiClient
 
         $server = $vk->photos()->getWallUploadServer($access_token ,$params);
 
-        $client = HttpClient::create();
-
-        $response = $client->request('POST', $server, [
-            'photo' => ''
-        ]);
-        return $response;
+        return $server;
     }
 
-    public function testFile($name)
-    {
-        $this->initFile($name);
-
-        return True;
-    }
+//    public function testFile($name)
+//    {
+//        $this->initFile($name);
+//
+//        return True;
+//    }
 
     protected function initFile($name, $mime=null, $content=null)
     {
@@ -119,6 +129,8 @@ class VkApiClient
 // Сохраняем в свойстве класса содержимое файла
             $this->content = $content;
         };
+
+        return $content;
     }
 
     public function validate(string $address)
