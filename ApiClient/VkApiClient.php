@@ -71,7 +71,9 @@ class VkApiClient
             $formData = new FormDataPart($formFields);
 
             $response = $client->request('POST', $server['upload_url'], [
-                'body' => fopen($array_files[$i], 'r'),
+                'body' =>[
+                    'file1' => $formData->bodyToIterable(),
+                ]
             ]);
         }
 
