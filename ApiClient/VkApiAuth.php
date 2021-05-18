@@ -23,21 +23,19 @@ class VkApiAuth
     protected string $redirect_uri;
     protected string $client_secret;
 
-    protected HttpClientInterface $client;
-    public function __construct($id, string $redirect_uri, string $client_secret = "")
+    #protected HttpClientInterface $client;
+
+    public function __construct($id, string $client_secret = "")
     {
         $this->clientId = $id;
-        $this->redirect_uri = $redirect_uri;
         $this->client_secret = $client_secret;
-
-        $this->client = HttpClient::create([]);
     }
 
     public function authorize()
     {
         $oauth = new VKOAuth('5.130');
         $client_id = $this->clientId;
-        $redirect_uri = $this->redirect_uri;
+        $redirect_uri = 'https://oauth.vk.com/blank.html';
         $display = VKOAuthDisplay::PAGE;
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
         $state = 'secret_state_code';
@@ -60,7 +58,7 @@ class VkApiAuth
         $oauth = new VKOAuth();
         $client_id = $this->clientId;
         $client_secret = $this->client_secret;
-        $redirect_uri = $this->redirect_uri;
+        $redirect_uri = 'https://oauth.vk.com/blank.html';
         $code = $get_code;
 
         $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
