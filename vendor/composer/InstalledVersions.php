@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '99b6a04ca794bcf3ab64bfc137bb7b136f91911c',
+    'reference' => '81493bade0a3695edfcbab087cce7e583b85ecad',
     'name' => 'roofikk/vk-api-bundle',
   ),
   'versions' => 
@@ -100,7 +100,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '99b6a04ca794bcf3ab64bfc137bb7b136f91911c',
+      'reference' => '81493bade0a3695edfcbab087cce7e583b85ecad',
     ),
     'symfony/config' => 
     array (
@@ -224,6 +224,15 @@ private static $installed = array (
       ),
       'reference' => 'c3cb71ee7e2d3eae5fe1001f81780d6a49b37937',
     ),
+    'symfony/mime' => 
+    array (
+      'pretty_version' => 'v5.2.7',
+      'version' => '5.2.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7af452bf51c46f18da00feb32e1ad36db9426515',
+    ),
     'symfony/phpunit-bridge' => 
     array (
       'pretty_version' => 'v5.2.8',
@@ -251,6 +260,15 @@ private static $installed = array (
       ),
       'reference' => '5601e09b69f26c1828b13b6bb87cb07cddba3170',
     ),
+    'symfony/polyfill-intl-idn' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2d63434d922daf7da8dd863e7907e67ee3031483',
+    ),
     'symfony/polyfill-intl-normalizer' => 
     array (
       'pretty_version' => 'v1.22.1',
@@ -268,6 +286,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '5232de97ee3b75b0360528dae24e73db49566ab1',
+    ),
+    'symfony/polyfill-php72' => 
+    array (
+      'pretty_version' => 'v1.22.1',
+      'version' => '1.22.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'cc6e6f9b39fe8075b3dabfbaf5b5f645ae1340c9',
     ),
     'symfony/polyfill-php73' => 
     array (

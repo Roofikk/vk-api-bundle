@@ -12,7 +12,8 @@
         "symfony/yaml": "^5.1",
         "symfony/http-client": "^5.1",
         "symfony/http-foundation": "^5.1",
-        "vkcom/vk-php-sdk": "^5.101"
+        "vkcom/vk-php-sdk": "^5.101",
+        "symfony/mime": "^5.2"
     },
     "require-dev": {
         "symfony/console": "^5.1",
