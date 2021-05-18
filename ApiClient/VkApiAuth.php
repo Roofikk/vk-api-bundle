@@ -24,7 +24,7 @@ class VkApiAuth
     protected string $client_secret;
 
     protected HttpClientInterface $client;
-    public function __construct($id, string $redirect_uri, string $client_secret)
+    public function __construct($id, string $redirect_uri, string $client_secret = "")
     {
         $this->clientId = $id;
         $this->redirect_uri = $redirect_uri;
@@ -41,26 +41,35 @@ class VkApiAuth
     protected function authorize()
     {
         $oauth = new VKOAuth('5.130');
-        $client_id = 7854063;
-        $redirect_uri = 'http://heimdallr.senlima.ru:30050/main';
+        $client_id = $this->clientId;
+        $redirect_uri = $this->redirect_uri;
         $display = VKOAuthDisplay::PAGE;
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
         $state = 'secret_state_code';
 
         $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
 
-        $response = $this->client->request('GET', $browser_url, [
-            'headers' => [
-                'content-type' => 'text/html',
-                'authority' => 'oauth.vk.com',
-            ],
-        ]);
+//        $response = $this->client->request('GET', $browser_url, [
+//            'headers' => [
+//                'content-type' => 'text/html',
+//                'authority' => 'oauth.vk.com',
+//            ],
+//        ]);
 
-        var_dump($response);
+        var_dump($browser_url);
     }
 
-    protected function get_access_token()
+    protected function get_access_token(string $get_code)
     {
+        $oauth = new VKOAuth();
+        $client_id = $this->clientId;
+        $client_secret = $this->client_secret;
+        $redirect_uri = $this->redirect_uri;
+        $code = $get_code;
 
+        $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+        $access_token = $response['access_token'];
+
+        return $access_token;
     }
 }
