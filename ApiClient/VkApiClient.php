@@ -63,6 +63,7 @@ class VkApiClient
         $client = HttpClient::create();
         for($i = 0; $i < count($array_files); ++$i)
         {
+            var_dump(pathinfo($array_files[$i]));
             $formFields = [
                 'regular_field' => 'some value',
                 'file_field' => DataPart::fromPath($array_files[$i]),
