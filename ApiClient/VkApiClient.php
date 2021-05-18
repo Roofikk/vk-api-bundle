@@ -64,7 +64,9 @@ class VkApiClient
         {
             $content = $this->initFile($array_files[$i]);
             $response = $client->request('POST', $server['upload_url'], [
-                'photo' => $content,
+                'json' => [
+                    'photo' => $content,
+                ]
             ]);
         }
 
