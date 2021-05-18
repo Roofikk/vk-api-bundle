@@ -16,7 +16,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use VK\Client\VKApiClient as OwnVkApiClient;
+use VK\Client\VKApiClient as OtherVkApiClient;
 
 use roofikk\VkApiBundle\Dto\AddressDto;
 
@@ -37,7 +37,7 @@ class VkApiClient
 
     public function wall_post($owner_id, string $message)
     {
-        $vk = new OwnVkApiClient('5.130');
+        $vk = new OtherVkApiClient('5.130');
         $access_token = $this->accessToken;
         $params = [
             'owner_id' => $owner_id,
@@ -45,11 +45,21 @@ class VkApiClient
             'friends_only' => '0',
             'from_group' => '1',
         ];
-        var_dump($params);
-        var_dump($access_token);
 
         $response = $vk->wall()->post($access_token, $params);
 
+        return $response;
+    }
+
+    public function getWallUploadServer($group_id)
+    {
+        $vk = new OtherVkApiClient('5.130');
+        $access_token = $this->accessToken;
+
+        if ($group_id > 0)
+            $group_id = $group_id * -1;
+
+        $response = $vk->photos()->getWallUploadServer($group_id);
         return $response;
     }
 
