@@ -40,7 +40,7 @@ class VkApiAuth
 
     protected function authorize()
     {
-        $oauth = new VKOAuth();
+        $oauth = new VKOAuth('5.130');
         $client_id = 7854063;
         $redirect_uri = 'http://heimdallr.senlima.ru:30050/main';
         $display = VKOAuthDisplay::PAGE;
