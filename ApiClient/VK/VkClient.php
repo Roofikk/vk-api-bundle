@@ -50,26 +50,37 @@ class VkClient
         return $response;
     }
 
-    public function wallPostWithPict($group_id, $array_files)
+    public function wallPostWithPict($group_id, $array_files, $message)
     {
-        $server = $this->getWallUploadServer();
-        $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
+        $result = [];
+        for ($i = 0; $i <= count($array_files); $i++)
+        {
+            $server = $this->getWallUploadServer();
+            $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
 
-        $response = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-            'server' => $response['server'],
-            'photo'  => $response['photo'],
-            'hash'   => $response['hash'],
-        ]);
+            array_push($result, $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
+                'server' => $response['server'],
+                'photo'  => $response['photo'],
+                'hash'   => $response['hash'],
+            ]));
+        }
+
+        $attachments = "";
+
+        for ($i = 0; $i < count($result); $i++)
+        {
+            $attachments = $attachments.'photo'.$result[$i][0]['owner_id'].'_'.$result[$i][0]['id'].',';
+        }
 
         $params = [
             'owner_id' => $group_id > 0 ? -$group_id : $group_id,
-            'message' => "Я фотка, я фотка",
+            'message' => $message,
             'friends_only' => '0',
             'from_group' => '1',
-            'attachments' => 'photo'.$response[0]['owner_id'].'_'.$response[0]['id'],
+            'attachments' => $attachments,
         ];
 
-        $this->vkClient->wall()->post($this->accessToken, $params);
+        $response = $this->vkClient->wall()->post($this->accessToken, $params);
 
         return $response;
     }
