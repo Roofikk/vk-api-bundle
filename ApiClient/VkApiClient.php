@@ -59,22 +59,24 @@ class VkApiClient
 
     public function wallPostWithPict($group_id, $array_files)
     {
-        $server = $this->getWallUploadServer($group_id);
+        $server = $this->getWallUploadServer($group_id)['upload_url'];
         $client = HttpClient::create();
         for($i = 0; $i < count($array_files); ++$i)
         {
             var_dump(pathinfo($array_files[$i]));
             $formFields = [
-                'regular_field' => 'some value',
-                'file_field' => DataPart::fromPath($array_files[$i]),
+                'file' => DataPart::fromPath($array_files[$i]),
             ];
             $formData = new FormDataPart($formFields);
 
-            $response = $client->request('POST', $server['upload_url'], [
+            $options = [
+                'headers' => $formData->getPreparedHeaders()->toArray(),
                 'body' =>[
-                    'photo' => '@'.$array_files[$i],
+                    'photo' => $formData->bodyToIterable(),
                 ]
-            ]);
+            ];
+
+            $response = $client->request('POST', $server, $options);
         }
 
         return $response;
