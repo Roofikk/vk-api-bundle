@@ -48,6 +48,6 @@ class FbAuth
             // access token from $_SESSION['facebook_access_token']
         }
 
-        return $fb;
+        return $accessToken;
     }
 }
