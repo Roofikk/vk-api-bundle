@@ -73,72 +73,15 @@ class VkApiClient
             'hash'   => $response['hash'],
         ]);
 
-        #var_dump();
+        $params = [
+            'owner_id' => $response[0]['owner_id'],
+            'message' => "Я фотка, я фотка",
+            'friends_only' => '0',
+            'from_group' => '1',
+            'attachments' => 'photo'.$response[0]['owner_id'].'_'.$response[0]['id'],
+        ];
 
-//        $client = new CurlHttpClient();
-//
-//        $options = array(
-//            CURLOPT_RETURNTRANSFER => true,     // return web page
-//            CURLOPT_HEADER         => false,    // don't return headers
-//            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-//            CURLOPT_ENCODING       => "",       // handle all encodings
-//            CURLOPT_USERAGENT      => "spider", // who am i
-//            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-//            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-//            CURLOPT_TIMEOUT        => 120,      // timeout on response
-//            CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
-//            CURLOPT_SSL_VERIFYPEER => false     // Disabled SSL Cert checks
-//        );
-//
-//
-//        $ch      = curl_init( $server );
-//        curl_setopt_array( $ch, $options );
-//
-//        $post = [
-//            "photo" => new CURLFile($array_files[0])
-//        ];
-//
-//        if($post){
-//            curl_setopt($ch, CURLOPT_POST, 1);
-//            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-//        }
-//
-//        $content = curl_exec( $ch );
-//        $err     = curl_errno( $ch );
-//        $errmsg  = curl_error( $ch );
-//        $header  = curl_getinfo( $ch );
-//        curl_close( $ch );
-//
-//        $header['errno']   = $err;
-//        $header['errmsg']  = $errmsg;
-//        $header['content'] = $content;
-//
-//        var_dump($header);
-
-
-//        $client = HttpClient::create();
-//        for($i = 0; $i < count($array_files); ++$i)
-//        {
-//            #var_dump(pathinfo($array_files[$i]));
-//            $formFields = [
-//                'photo' => DataPart::fromPath($array_files[$i]),
-//            ];
-//            #var_dump($formFields);
-//            $formData = new FormDataPart($formFields);
-//            #var_dump($formData);
-//
-//            $options = [
-//                'headers' => [
-//                    #$formData->getPreparedHeaders()->toArray(),
-//                    'Content-Type' => 'multipart/form-data'
-//                ],
-//                'body' => $formData->bodyToIterable()
-//            ];
-//
-//            $response = $client->request('POST', $server, $options);
-//        }
-//
-//        var_dump($response->getContent());
+        $vk->wall()->post($this->accessToken, $params);
 
         return $response;
     }
