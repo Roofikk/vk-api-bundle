@@ -16,6 +16,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 use VK\Client\VKApiClient as OtherVkApiClient;
@@ -61,28 +62,45 @@ class VkApiClient
     {
         $server = $this->getWallUploadServer($group_id)['upload_url'];
         var_dump($server);
-        $client = HttpClient::create();
-        for($i = 0; $i < count($array_files); ++$i)
-        {
-            #var_dump(pathinfo($array_files[$i]));
-            $formFields = [
-                'photo' => DataPart::fromPath($array_files[$i]),
-            ];
-            #var_dump($formFields);
-            $formData = new FormDataPart($formFields);
-            #var_dump($formData);
-            $options = [
-                'headers' => [
-                    $formData->getPreparedHeaders()->toArray(),
-                    'Content-Type' => 'multipart/form-data'
-                ],
-                'body' => [
-                    $formData->bodyToIterable(),
-                ]
-            ];
 
-            $response = $client->request('POST', $server, $options);
-        }
+        $client = new CurlHttpClient();
+
+        $post_params = [
+            'photo' => $array_files[0]
+        ];
+
+        $ch = curl_init($server);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
+        $response = curl_exec($ch);
+        curl_close( $ch );
+        print_r($response);
+
+//        $client = HttpClient::create();
+//        for($i = 0; $i < count($array_files); ++$i)
+//        {
+//            #var_dump(pathinfo($array_files[$i]));
+//            $formFields = [
+//                'photo' => DataPart::fromPath($array_files[$i]),
+//            ];
+//            #var_dump($formFields);
+//            $formData = new FormDataPart($formFields);
+//            #var_dump($formData);
+//            $options = [
+//                'headers' => [
+//                    #$formData->getPreparedHeaders()->toArray(),
+//                    'Content-Type' => 'multipart/form-data'
+//                ],
+//                'body' => [
+//                    $formData->bodyToIterable(),
+//                ]
+//            ];
+//
+//            $response = $client->request('POST', $server, $options);
+//        }
 
         return $response;
     }
