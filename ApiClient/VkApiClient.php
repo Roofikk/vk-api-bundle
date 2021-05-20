@@ -77,7 +77,7 @@ class VkApiClient
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
         $response = curl_exec($ch);
         curl_close( $ch );
-        print_r($response);
+        var_dump($response);
 
 //        $client = HttpClient::create();
 //        for($i = 0; $i < count($array_files); ++$i)
