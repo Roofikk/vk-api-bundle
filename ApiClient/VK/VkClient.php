@@ -72,6 +72,8 @@ class VkClient
             $attachments = $attachments.'photo'.$result[$i][0]['owner_id'].'_'.$result[$i][0]['id'].',';
         }
 
+        var_dump($attachments);
+
         $params = [
             'owner_id' => $group_id > 0 ? -$group_id : $group_id,
             'message' => $message,
