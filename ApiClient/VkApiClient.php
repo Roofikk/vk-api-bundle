@@ -61,21 +61,17 @@ class VkApiClient
 
     public function wallPostWithPict($group_id, $array_files)
     {
-        $vk = new OtherVkApiClient('5.130');
+        $vk = new OtherVkApiClient('5.130');        //use VK\Client\VKApiClient as OtherVkApiClient;
         $server = $this->getWallUploadServer($group_id);
         var_dump($group_id);
-        $response = $vk->getRequest()->upload($server['upload_url'], 'file1', $array_files[0]);
+        $response = $vk->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
         var_dump($response);
 
-        $params = [
+        $response = $vk->photos()->saveWallPhoto($this->accessToken, [
             'server' => $response['server'],
-            'photo' => $response['photo'],
-            'hash' => $response['hash'],
-        ];
-
-        var_dump($params);
-
-        $response = $vk->photos()->saveWallPhoto($this->accessToken, $params);
+            'photo'  => $response['photo'],
+            'hash'   => $response['hash'],
+        ]);
 
         #var_dump();
 
@@ -152,14 +148,11 @@ class VkApiClient
         $vk = new OtherVkApiClient('5.130');
         $access_token = $this->accessToken;
 
-        if ($group_id > 0)
-            $group_id = $group_id * -1;
+//        $params = [
+//            'group_id' => $group_id,
+//        ];
 
-        $params = [
-            'group_id' => $group_id,
-        ];
-
-        $server = $vk->photos()->getWallUploadServer($access_token ,$params);
+        $server = $vk->photos()->getWallUploadServer($access_token);
 
         return $server;
     }
