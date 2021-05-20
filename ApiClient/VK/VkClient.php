@@ -52,19 +52,21 @@ class VkClient
 
     public function wallPostWithPict($group_id, $array_files, $message)
     {
+        $result = [];
         for ($i = 0; $i < count($array_files); $i++)
         {
             $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken);
-            $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
+            $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
+
+            $result = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
+                'server' => $response['server'],
+                'photo'  => $response['photo'],
+                'hash'   => $response['hash'],
+            ]);
         }
 
-        var_dump($response);
+        var_dump($result);
         var_dump("HER");
-        $result = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-            'server' => $response['server'],
-            'photo'  => $response['photo'],
-            'hash'   => $response['hash'],
-        ]);
 
         var_dump($result);
         $attachments = "";
