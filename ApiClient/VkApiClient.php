@@ -68,7 +68,6 @@ class VkApiClient
 
         $photo = json_decode($response['photo']);
         $params = [
-            'group_id' => $group_id,
             'server' => $response['server'],
             'photo' => $photo,
             'hash' => $response['hash'],
