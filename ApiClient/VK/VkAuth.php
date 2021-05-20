@@ -1,7 +1,7 @@
 <?php
 
 
-namespace roofikk\VkApiBundle\ApiClient;
+namespace roofikk\VkApiBundle\ApiClient\VK;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpClient\HttpClient;
@@ -14,14 +14,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use VK\OAuth\VKOAuth;
 use VK\OAuth\VKOAuthDisplay;
 use VK\OAuth\Scopes\VKOAuthUserScope;
-use VK\OAuth\Scopes\VKOAuthGroupScope;
 use VK\OAuth\VKOAuthResponseType;
 
-class VkApiAuth
+class VkAuth
 {
     protected $clientId;
     protected string $redirect_uri;
     protected string $client_secret;
+    protected $oauth;
 
     #protected HttpClientInterface $client;
 
@@ -29,38 +29,30 @@ class VkApiAuth
     {
         $this->clientId = $id;
         $this->client_secret = $client_secret;
+        $this->oauth = new VKOAuth('5.130');
     }
 
     public function authorize()
     {
-        $oauth = new VKOAuth('5.130');
         $client_id = $this->clientId;
         $redirect_uri = 'https://oauth.vk.com/blank.html';
         $display = VKOAuthDisplay::PAGE;
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS, VKOAuthUserScope::PHOTOS);
         $state = 'secret_state_code';
 
-        $browser_url = $oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
-
-//        $response = $this->client->request('GET', $browser_url, [
-//            'headers' => [
-//                'content-type' => 'text/html',
-//                'authority' => 'oauth.vk.com',
-//            ],
-//        ]);
+        $browser_url = $this->oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
 
         return $browser_url;
     }
 
     public function get_access_token(string $get_code)
     {
-        $oauth = new VKOAuth();
         $client_id = $this->clientId;
         $client_secret = $this->client_secret;
         $redirect_uri = 'https://oauth.vk.com/blank.html';
         $code = $get_code;
 
-        $response = $oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
+        $response = $this->oauth->getAccessToken($client_id, $client_secret, $redirect_uri, $code);
         $access_token = $response['access_token'];
 
         return $access_token;
