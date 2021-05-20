@@ -64,6 +64,8 @@ class VkClient
                 'hash'   => $response[$i]['hash'],
             ]);
 
+            var_dump($response);
+
             $attachment = $attachment.'photo'.$response[$i][0]['owner_id'].'_'.$response[$i][0]['id'].',';
         }
 //        $response2 = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[1]);
