@@ -67,8 +67,6 @@ class VkClient
 
         var_dump($result);
         var_dump("HER");
-
-        var_dump($result);
         $attachments = "";
 
         for ($i = 0; $i < count($result); $i++)
