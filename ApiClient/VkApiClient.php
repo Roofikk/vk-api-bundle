@@ -67,6 +67,7 @@ class VkApiClient
         $response = $vk->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
 
         $photo = json_decode($response['photo']);
+        $photo = json_encode($photo);
         $params = [
             'server' => $response['server'],
             'photo' => $photo,
