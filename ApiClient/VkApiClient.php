@@ -29,9 +29,9 @@ class VkApiClient
     protected HttpClientInterface $client;
     protected string $accessToken;
 
-    protected $mime;
-    protected $file_name;
-    protected $content;
+//    protected $mime;
+//    protected $file_name;
+//    protected $content;
 
     /**
      * RussianPostClient constructor.
