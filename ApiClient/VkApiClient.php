@@ -65,19 +65,39 @@ class VkApiClient
 
         $client = new CurlHttpClient();
 
-        $post_params = [
-            'photo' => $array_files[0]
-        ];
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            CURLOPT_HEADER         => false,    // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING       => "",       // handle all encodings
+            CURLOPT_USERAGENT      => "spider", // who am i
+            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT        => 120,      // timeout on response
+            CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+            CURLOPT_SSL_VERIFYPEER => false     // Disabled SSL Cert checks
+        );
 
-        $ch = curl_init($server);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_params);
-        $response = curl_exec($ch);
+
+        $ch      = curl_init( $server );
+        curl_setopt_array( $ch, $options );
+
+        if(['phoro' => $array_files]){
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['phoro' => $array_files]);
+        }
+
+        $content = curl_exec( $ch );
+        $err     = curl_errno( $ch );
+        $errmsg  = curl_error( $ch );
+        $header  = curl_getinfo( $ch );
         curl_close( $ch );
-        var_dump($response);
+
+        $header['errno']   = $err;
+        $header['errmsg']  = $errmsg;
+        $header['content'] = $content;
+
+        var_dump($header);
 
 //        $client = HttpClient::create();
 //        for($i = 0; $i < count($array_files); ++$i)
@@ -94,15 +114,13 @@ class VkApiClient
 //                    #$formData->getPreparedHeaders()->toArray(),
 //                    'Content-Type' => 'multipart/form-data'
 //                ],
-//                'body' => [
-//                    $formData->bodyToIterable(),
-//                ]
+//                'body' => $formData->bodyToIterable()
 //            ];
 //
 //            $response = $client->request('POST', $server, $options);
 //        }
 
-        return $response;
+        return $header;
     }
 
     public function getWallUploadServer($group_id)
