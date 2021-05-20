@@ -83,7 +83,7 @@ class VkApiClient
         curl_setopt_array( $ch, $options );
 
         $post = [
-            'photo' => $array_files[0]
+            "photo" => new CURLFile($array_files[0])
         ];
 
         if($post){
