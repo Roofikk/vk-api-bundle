@@ -57,14 +57,12 @@ class VkClient
 
         for ($i = 0; $i < count($array_files); $i++)
         {
-            $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
+            $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
             $response[$i] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
                 'server' => $response[$i]['server'],
                 'photo'  => $response[$i]['photo'],
                 'hash'   => $response[$i]['hash'],
             ]);
-
-            var_dump($response);
 
             $attachment = $attachment.'photo'.$response[$i][0]['owner_id'].'_'.$response[$i][0]['id'].',';
         }
