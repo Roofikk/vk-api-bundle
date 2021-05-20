@@ -64,20 +64,20 @@ class VkApiClient
         $client = HttpClient::create();
         for($i = 0; $i < count($array_files); ++$i)
         {
-            var_dump(pathinfo($array_files[$i]));
+            #var_dump(pathinfo($array_files[$i]));
             $formFields = [
-                'file' => DataPart::fromPath($array_files[$i]),
+                'photo' => DataPart::fromPath($array_files[$i]),
             ];
-            var_dump($formFields);
+            #var_dump($formFields);
             $formData = new FormDataPart($formFields);
-            var_dump($formData);
+            #var_dump($formData);
             $options = [
                 'headers' => [
                     $formData->getPreparedHeaders()->toArray(),
-                    'content-type' => 'multipart/form-data'
+                    'Content-Type' => 'multipart/form-data'
                 ],
                 'body' => [
-                    'photo' => $formData->bodyToIterable(),
+                    $formData->bodyToIterable(),
                 ]
             ];
 
