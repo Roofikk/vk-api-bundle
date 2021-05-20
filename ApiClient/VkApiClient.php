@@ -67,13 +67,10 @@ class VkApiClient
         $response = $vk->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
         var_dump($response);
 
-        $photo = $response['photo'];
-        $photo = str_replace('\\', '', $photo);
-        $photo = str_replace('/', '\/', $photo);
-
-//        $photo = json_decode($response['photo']);
-//        $photo = json_encode($photo);
+        $photo = json_decode($response['photo']);
+        $photo = json_encode($photo);
         $params = [
+            'group_id' => $group_id,
             'server' => $response['server'],
             'photo' => $photo,
             'hash' => $response['hash'],
