@@ -74,11 +74,11 @@ class VkApiClient
         ]);
 
         $params = [
-            'owner_id' => $response[0]['owner_id'],
+            'owner_id' => -$group_id,
             'message' => "Я фотка, я фотка",
             'friends_only' => '0',
             'from_group' => '1',
-            'attachments' => 'photo'.-$group_id.'_'.$response[0]['id'],
+            'attachments' => 'photo'.$response[0]['owner_id'].'_'.$response[0]['id'],
         ];
 
         $vk->wall()->post($this->accessToken, $params);
