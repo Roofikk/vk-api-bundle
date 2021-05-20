@@ -24,7 +24,6 @@ class FbAuth
         $fb = new Facebook([
             'app_id' => $this->id,
             'app_secret' => $this->app_secret,
-            'default_graph_version' => 'v2.10',
         ]);
 
         $helper = $fb->getRedirectLoginHelper();
