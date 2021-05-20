@@ -78,7 +78,7 @@ class VkApiClient
             'message' => "Я фотка, я фотка",
             'friends_only' => '0',
             'from_group' => '1',
-            'attachments' => 'photo'.$response[0]['owner_id'].'_'.$response[0]['id'],
+            'attachments' => 'photo'.-$group_id.'_'.$response[0]['id'],
         ];
 
         $vk->wall()->post($this->accessToken, $params);
