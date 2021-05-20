@@ -76,9 +76,7 @@ class VkClient
 
     public function getWallUploadServer($group_id)
     {
-        $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken, [
-            'group_id' => $group_id,
-        ]);
+        $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken);
 
         return $server;
     }
