@@ -64,15 +64,12 @@ class VkApiClient
         $vk = new OtherVkApiClient('5.130');
         $server = $this->getWallUploadServer($group_id);
         var_dump($group_id);
-        $response = $vk->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
+        $response = $vk->getRequest()->upload($server['upload_url'], 'file1', $array_files[0]);
         var_dump($response);
 
-        $photo = json_decode($response['photo']);
-        $photo = json_encode($photo);
         $params = [
-            'group_id' => $group_id,
             'server' => $response['server'],
-            'photo' => $photo,
+            'photo' => $response['photo'],
             'hash' => $response['hash'],
         ];
 
