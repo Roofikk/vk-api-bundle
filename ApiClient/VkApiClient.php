@@ -69,7 +69,7 @@ class VkApiClient
         $params = [
             'server' => $response['server'],
             'photo' => $response['photo'],
-            'hash' => $server['hash'],
+            'hash' => $response['hash'],
         ];
 
         var_dump($params);
