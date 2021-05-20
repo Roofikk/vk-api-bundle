@@ -63,6 +63,8 @@ class VkClient
                 'photo'  => $response['photo'],
                 'hash'   => $response['hash'],
             ]));
+
+            var_dump($result);
         }
 
         $attachments = "";
