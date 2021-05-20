@@ -62,7 +62,7 @@ class VkApiClient
     public function wallPostWithPict($group_id, $array_files)
     {
         $vk = new OtherVkApiClient('5.130');        //use VK\Client\VKApiClient as OtherVkApiClient;
-        $server = $this->getWallUploadServer($group_id);
+        $server = $this->getWallUploadServer($group_id > 0 ? $group_id : -$group_id);
         var_dump($group_id);
         $response = $vk->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
         var_dump($response);
@@ -74,7 +74,7 @@ class VkApiClient
         ]);
 
         $params = [
-            'owner_id' => -$group_id,
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
             'message' => "Я фотка, я фотка",
             'friends_only' => '0',
             'from_group' => '1',
