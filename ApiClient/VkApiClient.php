@@ -63,9 +63,11 @@ class VkApiClient
     {
         $vk = new OtherVkApiClient('5.130');
         $server = $this->getWallUploadServer($group_id)['upload_url'];
-        $response = $vk->getRequest()->upload($server, 'photo', $array_files[0]);
-        var_dump($server);
-        var_dump($response);
+        $params = $vk->getRequest()->upload($server, 'photo', $array_files[0]);
+
+        $response = $vk->photos()->saveWallPhoto($this->accessToken, $params);
+
+        #var_dump();
 
 //        $client = new CurlHttpClient();
 //
