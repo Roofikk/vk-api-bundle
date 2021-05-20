@@ -59,9 +59,9 @@ class VkClient
         {
             $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
             $response[$i] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-                'server' => $response['server'],
-                'photo'  => $response['photo'],
-                'hash'   => $response['hash'],
+                'server' => $response[$i]['server'],
+                'photo'  => $response[$i]['photo'],
+                'hash'   => $response[$i]['hash'],
             ]);
 
             $attachment = $attachment.'photo'.$response[$i][0]['owner_id'].'_'.$response[$i][0]['id'].',';
