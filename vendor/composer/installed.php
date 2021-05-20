@@ -6,11 +6,20 @@
     'aliases' => 
     array (
     ),
-    'reference' => '81493bade0a3695edfcbab087cce7e583b85ecad',
+    'reference' => 'ad011b7cf7b538e76a9a9c946a424e782b2cef3d',
     'name' => 'roofikk/vk-api-bundle',
   ),
   'versions' => 
   array (
+    'facebook/graph-sdk' => 
+    array (
+      'pretty_version' => '5.7.0',
+      'version' => '5.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2d8250638b33d73e7a87add65f47fabf91f8ad9b',
+    ),
     'php-http/async-client-implementation' => 
     array (
       'provided' => 
@@ -87,7 +96,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '81493bade0a3695edfcbab087cce7e583b85ecad',
+      'reference' => 'ad011b7cf7b538e76a9a9c946a424e782b2cef3d',
     ),
     'symfony/config' => 
     array (
