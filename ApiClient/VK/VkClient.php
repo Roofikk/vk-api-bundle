@@ -52,7 +52,6 @@ class VkClient
 
     public function wallPostWithPict($group_id, $array_files, $message)
     {
-        $result = [];
         $server = $this->getWallUploadServer();
         for ($i = 0; $i <= count($array_files); $i++)
         {
@@ -70,7 +69,7 @@ class VkClient
 
         for ($i = 0; $i < count($result); $i++)
         {
-            $attachments = $attachments.'photo'.$result[$i][0]['owner_id'].'_'.$result[$i][0]['id'].',';
+            $attachments = $attachments.'photo'.$result[$i]['owner_id'].'_'.$result[$i]['id'].',';
         }
 
         var_dump($attachments);
