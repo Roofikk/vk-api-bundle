@@ -65,7 +65,11 @@ class VkApiClient
         $server = $this->getWallUploadServer($group_id)['upload_url'];
         $response = $vk->getRequest()->upload($server, 'photo', $array_files[0]);
 
-        $params = [$response['server'], $response['photo'], $response['hash']];
+        $params = [
+            'server' => $response['server'],
+            'photo' => $response['photo'],
+            'hash' => $response['hash'],
+        ];
 
         var_dump($params);
 
