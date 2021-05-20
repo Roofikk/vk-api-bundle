@@ -68,11 +68,15 @@ class VkApiClient
             $formFields = [
                 'file' => DataPart::fromPath($array_files[$i]),
             ];
+            var_dump($formFields);
             $formData = new FormDataPart($formFields);
-
+            var_dump($formData);
             $options = [
-                'headers' => $formData->getPreparedHeaders()->toArray(),
-                'body' =>[
+                'headers' => [
+                    $formData->getPreparedHeaders()->toArray(),
+                    'content-type' => 'multipart/form-data'
+                ],
+                'body' => [
                     'photo' => $formData->bodyToIterable(),
                 ]
             ];
