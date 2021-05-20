@@ -58,7 +58,7 @@ class VkClient
             $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
             var_dump(pathinfo($array_files[$i]));
         }
-
+        var_dump($response);
         $result = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
             'server' => $response['server'],
             'photo'  => $response['photo'],
