@@ -54,11 +54,21 @@ class VkClient
     {
         $server = $this->getWallUploadServer();
         $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
+        $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[1]);
         $response = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
             'server' => $response['server'],
             'photo'  => $response['photo'],
             'hash'   => $response['hash'],
         ]);
+
+//        $server = $this->getWallUploadServer();
+//        $response = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
+//            'server' => $response['server'],
+//            'photo'  => $response['photo'],
+//            'hash'   => $response['hash'],
+//        ]);
+
+        var_dump($response);
 
         $params = [
             'owner_id' => $group_id > 0 ? -$group_id : $group_id,
