@@ -62,13 +62,14 @@ class VkApiClient
     public function wallPostWithPict($group_id, $array_files)
     {
         $vk = new OtherVkApiClient('5.130');
-        $server = $this->getWallUploadServer($group_id)['upload_url'];
-        $response = $vk->getRequest()->upload($server, 'photo', $array_files[0]);
+        $server = $this->getWallUploadServer($group_id);
+        var_dump($server);
+        $response = $vk->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
 
         $params = [
             'server' => $response['server'],
             'photo' => $response['photo'],
-            'hash' => $response['hash'],
+            'hash' => $server['hash'],
         ];
 
         var_dump($params);
