@@ -53,34 +53,34 @@ class VkClient
     public function wallPostWithPict($group_id, $array_files, $message)
     {
         $server = $this->getWallUploadServer();
-        $response1 = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
-        $response2 = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[1]);
-        $response[0] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-            'server' => $response1['server'],
-            'photo'  => $response1['photo'],
-            'hash'   => $response1['hash'],
-        ]);
-        $response[1] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-            'server' => $response2['server'],
-            'photo'  => $response2['photo'],
-            'hash'   => $response2['hash'],
-        ]);
+        $attachment = "";
 
-//        $server = $this->getWallUploadServer();
-//        $response = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-//            'server' => $response['server'],
-//            'photo'  => $response['photo'],
-//            'hash'   => $response['hash'],
+        for ($i = 0; $i < count($array_files); $i++)
+        {
+            $response = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[0]);
+            $response[$i] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
+                'server' => $response['server'],
+                'photo'  => $response['photo'],
+                'hash'   => $response['hash'],
+            ]);
+
+            $attachment = $attachment.'photo'.$response[0][0]['owner_id'].'_'.$response[0][0]['id'].',';
+        }
+//        $response2 = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[1]);
+//        $response[1] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
+//            'server' => $response2['server'],
+//            'photo'  => $response2['photo'],
+//            'hash'   => $response2['hash'],
 //        ]);
 
-        var_dump($response);
+
 
         $params = [
             'owner_id' => $group_id > 0 ? -$group_id : $group_id,
             'message' => $message,
             'friends_only' => '0',
             'from_group' => '1',
-            'attachments' => 'photo'.$response[0][0]['owner_id'].'_'.$response[0][0]['id'].','.'photo'.$response[1][0]['owner_id'].'_'.$response[1][0]['id'].',',
+            'attachments' => $attachment,
         ];
 
         $response = $this->vkClient->wall()->post($this->accessToken, $params);
