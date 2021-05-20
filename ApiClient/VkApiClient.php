@@ -82,9 +82,13 @@ class VkApiClient
         $ch      = curl_init( $server );
         curl_setopt_array( $ch, $options );
 
-        if(['phoro' => $array_files]){
+        $post = [
+            'photo' => $array_files[0]
+        ];
+
+        if($post){
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, ['phoro' => $array_files]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         }
 
         $content = curl_exec( $ch );
