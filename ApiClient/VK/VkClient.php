@@ -118,8 +118,7 @@ class VkClient
         ]);
         var_dump($storyInfo['upload_url']);
 
-        $address = $this->vkClient->getRequest()->upload((string) $storyInfo['upload_url'], 'video_file', (string) $video);
-        var_dump($address);
+        $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'video_file', $video);
         $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
             'upload_results' => $address['upload_result'],
         ]);
