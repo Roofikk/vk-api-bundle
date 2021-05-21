@@ -80,7 +80,7 @@ class VkClient
         return $response;
     }
 
-    public function wallPostWithVideo($group_id, $message, $videoName, $description = "", )
+    public function wallPostWithVideo($group_id, $message, $videoName, $description = "")
     {
         $response = $this->vkClient->video()->save($this->accessToken, [
             'name' => $videoName,
