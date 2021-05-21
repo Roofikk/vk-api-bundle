@@ -52,7 +52,7 @@ class VkClient
 
     public function wallPostWithPict($group_id, $array_files, $message)
     {
-        $server = $this->getWallUploadServer();
+        $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken);
         $attachment = "";
 
         for ($i = 0; $i < count($array_files); $i++)
@@ -66,14 +66,6 @@ class VkClient
 
             $attachment = $attachment.'photo'.$response[$i][0]['owner_id'].'_'.$response[$i][0]['id'].',';
         }
-//        $response2 = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[1]);
-//        $response[1] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-//            'server' => $response2['server'],
-//            'photo'  => $response2['photo'],
-//            'hash'   => $response2['hash'],
-//        ]);
-
-
 
         $params = [
             'owner_id' => $group_id > 0 ? -$group_id : $group_id,
@@ -88,11 +80,14 @@ class VkClient
         return $response;
     }
 
-    public function getWallUploadServer()
+    public function wallPostWithVideo($group_id, $message, $videoName, $description = "", )
     {
-        $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken);
-
-        return $server;
+        $response = $this->vkClient->video()->save($this->accessToken, [
+            'name' => $videoName,
+            'wallpost' => 1,
+            'description' => $description,
+            'group_id' => $group_id,
+        ]);
     }
 }
 
