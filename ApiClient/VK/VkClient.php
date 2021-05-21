@@ -94,9 +94,11 @@ class VkClient
         return $response;
     }
 
-    public function addPhotoToStories()
+    public function addPhotoToStories($group_id)
     {
-        $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken);
+        $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
+            'group_id' => $group_id,
+        ]);
 
         return $storyInfo;
     }
