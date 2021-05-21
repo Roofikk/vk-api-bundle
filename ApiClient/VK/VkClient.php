@@ -80,14 +80,16 @@ class VkClient
         return $response;
     }
 
-    public function wallPostWithVideo($group_id, $message, $videoName, $description = "")
+    public function wallPostWithVideo($group_id, $message, $videoName, $path, $description = "")
     {
-        $response = $this->vkClient->video()->save($this->accessToken, [
+        $videoInfo = $this->vkClient->video()->save($this->accessToken, [
             'name' => $videoName,
             'wallpost' => 1,
             'description' => $description,
             'group_id' => $group_id,
         ]);
+
+        $response = $this->vkClient->getRequest()->upload($videoInfo['upload_url'], 'video_file', $path);
 
         return $response;
     }
