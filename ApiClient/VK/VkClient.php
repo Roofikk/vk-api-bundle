@@ -93,5 +93,12 @@ class VkClient
 
         return $response;
     }
+
+    public function addPhotoToStories()
+    {
+        $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken);
+
+        return $storyInfo;
+    }
 }
 
