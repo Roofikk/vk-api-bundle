@@ -32,7 +32,7 @@ class VkClient
     public function __construct(string $token)
     {
         $this->accessToken = $token;
-        $this->vkClient = new VKApiClient('5.101');
+        $this->vkClient = new VKApiClient('5.130');
     }
 
     public function wall_post($owner_id, string $message)
