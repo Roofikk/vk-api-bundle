@@ -111,6 +111,7 @@ class VkClient
 
     public function addVideoToStories($group_id, $video)
     {
+        var_dump(pathinfo($video));
         $storyInfo = $this->vkClient->stories()->getVideoUploadServer($this->accessToken, [
             'add_to_news' => 1,
             'group_id' => $group_id,
