@@ -96,7 +96,7 @@ class VkClient
             'message' => $message,
             'friends_only' => '0',
             'from_group' => '1',
-            'attachments' => 'video'.$group_id.'_'.$response['video_id'],
+            'attachments' => 'video'.$response['owner_id'].'_'.$response['video_id'].',',
         ];
 
         $response = $this->vkClient->wall()->post($this->accessToken, $params);
