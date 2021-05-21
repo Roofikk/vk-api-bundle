@@ -88,6 +88,8 @@ class VkClient
             'description' => $description,
             'group_id' => $group_id,
         ]);
+
+        return $response;
     }
 }
 
