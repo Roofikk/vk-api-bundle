@@ -116,10 +116,10 @@ class VkClient
             'add_to_news' => 1,
             #'group_id' => $group_id,
         ]);
-        var_dump($storyInfo);
+        var_dump($storyInfo['upload_url']);
 
-//        $address = $this->vkClient->getRequest()->upload((string) $storyInfo['upload_url'], 'video_file', (string) $video);
-//        var_dump($address);
+        $address = $this->vkClient->getRequest()->upload((string) $storyInfo['upload_url'], 'video_file', (string) $video);
+        var_dump($address);
 //        $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
 //            'upload_results' => $address['upload_result'],
 //        ]);
