@@ -38,7 +38,7 @@ class VkAuth
         $client_id = $this->clientId;
         $redirect_uri = 'https://oauth.vk.com/blank.html';
         $display = VKOAuthDisplay::PAGE;
-        $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS, VKOAuthUserScope::PHOTOS);
+        $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS, VKOAuthUserScope::PHOTOS, VKOAuthUserScope::VIDEO);
         $state = 'secret_state_code';
 
         $browser_url = $this->oauth->getAuthorizeUrl(VKOAuthResponseType::CODE, $client_id, $redirect_uri, $display, $scope, $state);
