@@ -103,7 +103,7 @@ class VkClient
 
         $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
 
-        return $storyInfo;
+        return $address;
     }
 }
 
