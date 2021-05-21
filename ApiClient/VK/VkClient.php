@@ -97,8 +97,11 @@ class VkClient
     public function addPhotoToStories($group_id)
     {
         $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
+            'add_to_news' => 1,
             'group_id' => $group_id,
         ]);
+
+        #$response = $this->vkClient->getRequest()->upload($storyInfo['upload_url])
 
         return $storyInfo;
     }
