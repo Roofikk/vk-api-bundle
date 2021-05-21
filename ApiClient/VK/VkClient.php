@@ -91,15 +91,15 @@ class VkClient
 
         $response = $this->vkClient->getRequest()->upload($videoInfo['upload_url'], 'video_file', $path);
 
-//        $params = [
-//            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
-//            'message' => $message,
-//            'friends_only' => '0',
-//            'from_group' => '1',
-//            'attachments' => 'video'.$group_id.'_'.$response[],
-//        ];
+        $params = [
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
+            'message' => $message,
+            'friends_only' => '0',
+            'from_group' => '1',
+            'attachments' => 'video'.$group_id.'_'.$response['video_id'],
+        ];
 
-        //$response = $this->vkClient->wall()->post($this->accessToken, $params);
+        $response = $this->vkClient->wall()->post($this->accessToken, $params);
 
         return $response;
     }
