@@ -32,7 +32,7 @@ class VkClient
     public function __construct(string $token)
     {
         $this->accessToken = $token;
-        $this->vkClient = new VKApiClient('5.130');
+        $this->vkClient = new VKApiClient('5.101');
     }
 
     public function wall_post($owner_id, string $message)
@@ -118,7 +118,7 @@ class VkClient
         ]);
         var_dump($storyInfo);
 
-        $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $video);
+        $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'video_file', $video);
         var_dump($address);
         $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
             'upload_results' => $address['upload_result'],
