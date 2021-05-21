@@ -84,12 +84,22 @@ class VkClient
     {
         $videoInfo = $this->vkClient->video()->save($this->accessToken, [
             'name' => $videoName,
-            'wallpost' => 1,
+            #'wallpost' => 1,
             'description' => $description,
             'group_id' => $group_id,
         ]);
 
         $response = $this->vkClient->getRequest()->upload($videoInfo['upload_url'], 'video_file', $path);
+
+//        $params = [
+//            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
+//            'message' => $message,
+//            'friends_only' => '0',
+//            'from_group' => '1',
+//            'attachments' => 'video'.$group_id.'_'.$response[],
+//        ];
+
+        //$response = $this->vkClient->wall()->post($this->accessToken, $params);
 
         return $response;
     }
