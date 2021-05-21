@@ -94,14 +94,14 @@ class VkClient
         return $response;
     }
 
-    public function addPhotoToStories($group_id)
+    public function addPhotoToStories($group_id, $photo)
     {
         $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
             'add_to_news' => 1,
             'group_id' => $group_id,
         ]);
 
-        #$response = $this->vkClient->getRequest()->upload($storyInfo['upload_url])
+        $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
 
         return $storyInfo;
     }
