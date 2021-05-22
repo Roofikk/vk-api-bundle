@@ -50,21 +50,24 @@ class VkClient
         return $response;
     }
 
-    public function wallPostWithPict($group_id, $array_files, $message)
+    public function wallPostWithPict($group_id, $array_files, $message = "")
     {
         $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken);
         $attachment = "";
 
-        for ($i = 0; $i < count($array_files); $i++)
-        {
-            $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
-            $response[$i] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
-                'server' => $response[$i]['server'],
-                'photo'  => $response[$i]['photo'],
-                'hash'   => $response[$i]['hash'],
-            ]);
+        if (count($array_files) > 0) {
+            for ($i = 0; $i < count($array_files); $i++) {
+                $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
+                $response[$i] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
+                    'server' => $response[$i]['server'],
+                    'photo' => $response[$i]['photo'],
+                    'hash' => $response[$i]['hash'],
+                ]);
 
-            $attachment = $attachment.'photo'.$response[$i][0]['owner_id'].'_'.$response[$i][0]['id'].',';
+                $attachment = $attachment . 'photo' . $response[$i][0]['owner_id'] . '_' . $response[$i][0]['id'] . ',';
+            }
+        } else {
+            return "not enough files";
         }
 
         $params = [
@@ -80,7 +83,7 @@ class VkClient
         return $response;
     }
 
-    public function wallPostWithVideo($group_id, $message, $videoName, $path, $description = "")
+    public function wallPostWithVideo($group_id, $videoName, $path, $description = "", $message = "")
     {
         $videoInfo = $this->vkClient->video()->save($this->accessToken, [
             'name' => $videoName,
