@@ -104,7 +104,7 @@ class VkClient
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'post',
-            'owner_id' => $group_id,
+            'owner_id' => -$group_id,
             'item_id' => (int)$post_id,
         ]);
 
