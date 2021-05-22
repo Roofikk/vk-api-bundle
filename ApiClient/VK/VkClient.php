@@ -160,7 +160,7 @@ class VkClient
         print($story_id);
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-            'type' => 'story',
+            'type' => 'stories',
             'owner_id' => $group_id > 0 ? -$group_id : $group_id,
             'item_id' => (int)$story_id,
         ]);
