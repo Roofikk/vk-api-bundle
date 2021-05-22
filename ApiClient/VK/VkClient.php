@@ -156,17 +156,7 @@ class VkClient
             'upload_results' => $address['upload_result'],
         ]);
 
-        $story_id = $response['items'][0]['id'];
-        print($story_id);
-        var_dump($response);
-
-        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-            'type' => 'stories',
-            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
-            'item_id' => (int)$story_id,
-        ]);
-
-        return $story_id;
+        return $response['items'][0]['id'];
     }
 
     public function addVideoToStories($group_id, $video)
@@ -183,6 +173,16 @@ class VkClient
             'upload_results' => $address['upload_result'],
         ]);
         var_dump($response);
+
+        return $response['items'][0]['id'];
+    }
+
+    public function getStoryStats($owner_id, $story_id)
+    {
+        $response = $this->vkClient->getRequest()->post('stories.getStats', $this->accessToken, [
+            'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
+            'story_id' => $story_id,
+        ]);
 
         return $response;
     }
