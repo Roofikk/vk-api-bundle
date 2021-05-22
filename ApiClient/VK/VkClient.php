@@ -179,9 +179,20 @@ class VkClient
 
     public function getStoryStats($owner_id, $story_id)
     {
-        $response = $this->vkClient->getRequest()->post('stories.getStats', $this->accessToken, [
+        $response = $this->vkClient->stories()->getStats($this->accessToken, [
             'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
             'story_id' => $story_id,
+        ]);
+
+        return $response;
+    }
+
+    public function getStoryReplies($owner_id, $story_id)
+    {
+        $response = $this->vkClient->stories()->getReplies($this->accessToken, [
+            'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
+            'story_id' => $story_id,
+            'extended' => 1,
         ]);
 
         return $response;
