@@ -35,9 +35,8 @@ class VkClient
         $this->vkClient = new VKApiClient('5.130');
     }
 
-    public function wall_post($owner_id, string $message)
+    public function wall_post($owner_id, string $message, $repost = false, $repost_message = "")
     {
-        $access_token = $this->accessToken;
         $params = [
             'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
             'message' => $message,
@@ -45,18 +44,29 @@ class VkClient
             'from_group' => '1',
         ];
 
-        $response = $this->vkClient->wall()->post($access_token, $params);
+        $response = $this->vkClient->wall()->post($this->accessToken, $params);
         $post_id = 0;
         if (is_numeric($response))
             $post_id = $response;
         else
             $post_id = $response['post_id'];
 
-        $likeResponse = $this->vkClient->likes()->add($access_token, [
+        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'post',
             'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
             'item_id' => $post_id,
         ]);
+
+        if ($repost)
+        {
+            $params = [
+                'object' => 'wall'.($owner_id > 0 ? -$owner_id : $owner_id).'_'.$post_id,
+                'message' => $repost_message,
+            ];
+
+            $response = $this->vkClient->wall()->repost($this->accessToken, $params);
+        }
+
 
         return $post_id;
     }
