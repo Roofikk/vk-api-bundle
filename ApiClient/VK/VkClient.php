@@ -89,11 +89,11 @@ class VkClient
 
         $response = $this->vkClient->wall()->post($this->accessToken, $params);
 
-        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-            'type' => 'post',
-            'owner_id' => $group_id,
-            'item_id' => $response,
-        ]);
+//        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+//            'type' => 'post',
+//            'owner_id' => $group_id,
+//            'item_id' => $response,
+//        ]);
 
         return $response;
     }
