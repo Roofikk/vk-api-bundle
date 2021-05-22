@@ -98,8 +98,10 @@ class VkClient
         $post_id = 0;
         if (is_numeric($response))
             $post_id = $response;
-        else
-            $post_id = $response['post_id'];
+        else {
+            $post_id = str_replace('int(', '', $response['post_id']);
+            $post_id = str_replace(')', '', $post_id);
+        }
         var_dump($post_id);
 
 //        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
