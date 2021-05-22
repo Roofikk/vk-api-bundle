@@ -58,7 +58,7 @@ class VkClient
             'item_id' => $post_id,
         ]);
 
-        return $likeResponse;
+        return $post_id;
     }
 
     public function wallPostWithPict($group_id, $array_files, $message = "")
@@ -107,7 +107,7 @@ class VkClient
             'item_id' => (int)$post_id,
         ]);
 
-        return $response;
+        return $post_id;
     }
 
     public function wallPostWithVideo($group_id, $videoName, $path, $description = "", $message = "")
@@ -131,7 +131,19 @@ class VkClient
 
         $response = $this->vkClient->wall()->post($this->accessToken, $params);
 
-        return $response;
+        if (is_numeric($response))
+            $post_id = $response;
+        else
+            $post_id = $response['post_id'];
+        print $post_id;
+
+        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+            'type' => 'post',
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
+            'item_id' => (int)$post_id,
+        ]);
+
+        return $post_id;
     }
 
     public function addPhotoToStories($group_id, $photo)
