@@ -157,7 +157,7 @@ class VkClient
         ]);
         var_dump($response);
         $story_id = $response['items'][0]['id'];
-        var_dump($story_id);
+        var_dump((string)$story_id);
 
         if ($reply)
         {
