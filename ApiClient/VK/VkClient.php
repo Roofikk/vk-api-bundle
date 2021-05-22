@@ -99,7 +99,6 @@ class VkClient
             $post_id = $response;
         else
             $post_id = $response['post_id'];
-        print $post_id;
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'post',
@@ -135,7 +134,6 @@ class VkClient
             $post_id = $response;
         else
             $post_id = $response['post_id'];
-        print $post_id;
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'post',
@@ -156,6 +154,14 @@ class VkClient
         $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
         $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
             'upload_results' => $address['upload_result'],
+        ]);
+
+        $story_id = $response['items'][0]['id'];
+
+        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+            'type' => 'story',
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
+            'item_id' => (int)$story_id,
         ]);
 
         return $response;
