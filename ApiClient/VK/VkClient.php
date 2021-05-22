@@ -39,7 +39,7 @@ class VkClient
     {
         $access_token = $this->accessToken;
         $params = [
-            'owner_id' => $owner_id,
+            'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
             'message' => $message,
             'friends_only' => '0',
             'from_group' => '1',
@@ -54,7 +54,7 @@ class VkClient
 
         $likeResponse = $this->vkClient->likes()->add($access_token, [
             'type' => 'post',
-            'owner_id' => $owner_id,
+            'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
             'item_id' => $post_id,
         ]);
 
@@ -104,7 +104,7 @@ class VkClient
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'post',
-            'owner_id' => -$group_id,
+            'owner_id' => -$group_id > 0 ? -$group_id : $group_id,
             'item_id' => (int)$post_id,
         ]);
 
