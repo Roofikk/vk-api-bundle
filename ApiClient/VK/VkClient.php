@@ -46,8 +46,13 @@ class VkClient
         ];
 
         $response = $this->vkClient->wall()->post($access_token, $params);
+        $likeResponse = $this->vkClient->likes()->add($access_token, [
+            'type' => 'post',
+            'owner_id' => $owner_id,
+            'item_id' => $response,
+        ]);
 
-        return $response;
+        return $likeResponse;
     }
 
     public function wallPostWithPict($group_id, $array_files, $message = "")
@@ -57,7 +62,11 @@ class VkClient
 
         if (count($array_files) > 0) {
             for ($i = 0; $i < count($array_files); $i++) {
-                $response[$i] = $this->vkClient->getRequest()->upload($server['upload_url'], 'photo', $array_files[$i]);
+                $response[$i] = $this->vkClient->getRequest()->upload(
+                    $server['upload_url'],
+                    'photo',
+                    $array_files[$i]
+                );
                 $response[$i] = $this->vkClient->photos()->saveWallPhoto($this->accessToken, [
                     'server' => $response[$i]['server'],
                     'photo' => $response[$i]['photo'],
