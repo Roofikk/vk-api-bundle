@@ -199,18 +199,15 @@ class VkClient
 
     public function addVideoToStories($group_id, $video)
     {
-        var_dump(pathinfo($video));
         $storyInfo = $this->vkClient->stories()->getVideoUploadServer($this->accessToken, [
             'add_to_news' => 1,
             'group_id' => $group_id,
         ]);
-        var_dump($storyInfo['upload_url']);
 
         $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'video_file', $video);
         $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
             'upload_results' => $address['upload_result'],
         ]);
-        var_dump($response);
 
         return $response['items'][0]['id'];
     }
