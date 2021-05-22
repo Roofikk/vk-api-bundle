@@ -144,10 +144,11 @@ class VkClient
         return $post_id;
     }
 
-    public function addPhotoToStories($group_id, $photo)
+    public function addPhotoToStories($group_id, $photo, $reply = false)
     {
         $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
             'add_to_news' => 1,
+            'group_id' => $group_id,
         ]);
 
         $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
@@ -155,7 +156,22 @@ class VkClient
             'upload_results' => $address['upload_result'],
         ]);
 
-        return $response['items'][0]['id'];
+        $story_id = $response['items'][0]['id'];
+
+        if ($reply)
+        {
+            $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
+                'add_to_news' => 1,
+                'reply_to_story' => $story_id,
+            ]);
+
+            $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
+            $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
+                'upload_results' => $address['upload_result'],
+            ]);
+        }
+
+        return $story_id;
     }
 
     public function addVideoToStories($group_id, $video)
