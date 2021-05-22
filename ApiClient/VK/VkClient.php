@@ -155,7 +155,9 @@ class VkClient
         $response = $this->vkClient->getRequest()->post('stories.save', $this->accessToken, [
             'upload_results' => $address['upload_result'],
         ]);
+        var_dump($storyInfo);
         var_dump($response);
+        var_dump($address);
         $story_id = $response['items'][0]['id'];
 
         if ($reply)
