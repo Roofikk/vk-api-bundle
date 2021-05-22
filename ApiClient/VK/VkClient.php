@@ -95,7 +95,6 @@ class VkClient
 
         $response = $this->vkClient->wall()->post($this->accessToken, $params);
 
-        $post_id = 0;
         if (is_numeric($response))
             $post_id = $response;
         else
@@ -104,7 +103,7 @@ class VkClient
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'post',
-            'owner_id' => -$group_id > 0 ? -$group_id : $group_id,
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
             'item_id' => (int)$post_id,
         ]);
 
