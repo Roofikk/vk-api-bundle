@@ -161,7 +161,7 @@ class VkClient
         {
             $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
                 'add_to_news' => 1,
-                'reply_to_story' => -$group_id."_".$story_id,
+                'reply_to_story' => ($group_id > 0 ? -$group_id : $group_id)."_".$story_id,
             ]);
 
             $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
@@ -169,12 +169,6 @@ class VkClient
                 'upload_results' => $address['upload_result'],
             ]);
         }
-
-        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-            'type' => 'stories',
-            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
-            'item_id' => ($group_id > 0 ? -$group_id : $group_id)."_".$story_id,
-        ]);
 
         return $story_id;
     }
