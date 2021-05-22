@@ -158,10 +158,11 @@ class VkClient
 
         $story_id = $response['items'][0]['id'];
         print($story_id);
+        var_dump($response);
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'stories',
-            'owner_id' => $group_id,
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
             'item_id' => (int)$story_id,
         ]);
 
