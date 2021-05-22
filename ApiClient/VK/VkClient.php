@@ -163,7 +163,7 @@ class VkClient
         {
             $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
                 'add_to_news' => 1,
-                'reply_to_story' => (int)$story_id,
+                'reply_to_story' => (string)$story_id,
             ]);
 
             $address = $this->vkClient->getRequest()->upload($storyInfo['upload_url'], 'file', $photo);
