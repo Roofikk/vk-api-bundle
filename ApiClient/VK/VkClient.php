@@ -192,7 +192,7 @@ class VkClient
         $response = $this->vkClient->stories()->getReplies($this->accessToken, [
             'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
             'story_id' => $story_id,
-            'extended' => 1,
+            'extended' => 0,
         ]);
 
         return $response;
