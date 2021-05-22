@@ -170,6 +170,12 @@ class VkClient
             ]);
         }
 
+        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+            'type' => 'stories',
+            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
+            'item_id' => ($group_id > 0 ? -$group_id : $group_id)."_".$story_id,
+        ]);
+
         return $story_id;
     }
 
