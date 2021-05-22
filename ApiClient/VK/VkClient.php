@@ -57,19 +57,23 @@ class VkClient
             'item_id' => $post_id,
         ]);
 
-        if ($repost)
-        {
-            $params = [
-                'object' => 'wall'.($owner_id > 0 ? -$owner_id : $owner_id).'_'.$post_id,
-                'message' => $repost_message,
-            ];
-
-            $response = $this->vkClient->wall()->repost($this->accessToken, $params);
-        }
-
-
         return $post_id;
     }
+
+    public function wallPostAndRepost($owner_id, string $message, $repost_message = "")
+    {
+        $post_id = $this->wall_post($owner_id, $owner_id);
+
+        $params = [
+            'object' => 'wall'.($owner_id > 0 ? -$owner_id : $owner_id).'_'.$post_id,
+            'message' => $repost_message,
+        ];
+
+        $response = $this->vkClient->wall()->repost($this->accessToken, $params);
+
+        return $response;
+    }
+
 
     public function wallPostWithPict($group_id, $array_files, $message = "")
     {
