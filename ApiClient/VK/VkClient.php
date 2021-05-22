@@ -64,7 +64,7 @@ class VkClient
 
     public function wallPostAndRepost($owner_id, string $message, $repost_message = "", $like_post = false, $like_repost = false)
     {
-        $post_id = $this->wall_post($owner_id, $owner_id, $like_post);
+        $post_id = $this->wall_post($owner_id, $message, $like_post);
 
         $params = [
             'object' => 'wall'.($owner_id > 0 ? -$owner_id : $owner_id).'_'.$post_id,
