@@ -157,6 +157,7 @@ class VkClient
         ]);
 
         $story_id = $response['items'][0]['id'];
+        print($story_id);
 
         $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
             'type' => 'story',
