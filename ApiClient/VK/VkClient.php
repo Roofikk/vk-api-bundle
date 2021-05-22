@@ -46,10 +46,16 @@ class VkClient
         ];
 
         $response = $this->vkClient->wall()->post($access_token, $params);
+        $post_id = 0;
+        if (is_numeric($response))
+            $post_id = $response;
+        else
+            $post_id = $response['post_id'];
+
         $likeResponse = $this->vkClient->likes()->add($access_token, [
             'type' => 'post',
             'owner_id' => $owner_id,
-            'item_id' => $response,
+            'item_id' => $post_id,
         ]);
 
         return $likeResponse;
@@ -89,11 +95,16 @@ class VkClient
 
         $response = $this->vkClient->wall()->post($this->accessToken, $params);
 
-//        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-//            'type' => 'post',
-//            'owner_id' => $group_id,
-//            'item_id' => $response,
-//        ]);
+        if (is_numeric($response))
+            $post_id = $response;
+        else
+            $post_id = $response['post_id'];
+
+        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+            'type' => 'post',
+            'owner_id' => $group_id,
+            'item_id' => $post_id,
+        ]);
 
         return $response;
     }
