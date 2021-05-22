@@ -16,6 +16,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
+use VK\Actions\Account;
 use VK\Client\VKApiClient;
 
 
@@ -35,7 +36,7 @@ class VkClient
         $this->vkClient = new VKApiClient('5.130');
     }
 
-    public function wall_post($owner_id, string $message, $repost = false, $repost_message = "")
+    public function wall_post($owner_id, string $message, $like = false)
     {
         $params = [
             'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
@@ -51,18 +52,19 @@ class VkClient
         else
             $post_id = $response['post_id'];
 
-        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-            'type' => 'post',
-            'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
-            'item_id' => $post_id,
-        ]);
+        if ($like)
+            $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+                'type' => 'post',
+                'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
+                'item_id' => $post_id,
+            ]);
 
         return $post_id;
     }
 
-    public function wallPostAndRepost($owner_id, string $message, $repost_message = "")
+    public function wallPostAndRepost($owner_id, string $message, $repost_message = "", $like_post = false, $like_repost = false)
     {
-        $post_id = $this->wall_post($owner_id, $owner_id);
+        $post_id = $this->wall_post($owner_id, $owner_id, $like_post);
 
         $params = [
             'object' => 'wall'.($owner_id > 0 ? -$owner_id : $owner_id).'_'.$post_id,
@@ -70,6 +72,14 @@ class VkClient
         ];
 
         $response = $this->vkClient->wall()->repost($this->accessToken, $params);
+
+        if ($like_repost)
+        {
+            $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+                'type' => 'post',
+                'item_id' => $response['post_id'],
+            ]);
+        }
 
         return $response;
     }
