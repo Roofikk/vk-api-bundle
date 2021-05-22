@@ -164,7 +164,7 @@ class VkClient
             'item_id' => (int)$story_id,
         ]);
 
-        return $response;
+        return $story_id;
     }
 
     public function addVideoToStories($group_id, $video)
