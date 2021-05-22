@@ -36,7 +36,7 @@ class VkClient
         $this->vkClient = new VKApiClient('5.130');
     }
 
-    public function wall_post($owner_id, string $message, $like = false)
+    public function wallPost($owner_id, string $message, $like = false)
     {
         $params = [
             'owner_id' => $owner_id > 0 ? -$owner_id : $owner_id,
@@ -64,7 +64,7 @@ class VkClient
 
     public function wallPostAndRepost($owner_id, string $message, $repost_message = "", $like_post = false, $like_repost = false)
     {
-        $post_id = $this->wall_post($owner_id, $message, $like_post);
+        $post_id = $this->wallPost($owner_id, $message, $like_post);
 
         $params = [
             'object' => 'wall'.($owner_id > 0 ? -$owner_id : $owner_id).'_'.$post_id,
@@ -84,8 +84,7 @@ class VkClient
         return $response;
     }
 
-
-    public function wallPostWithPict($group_id, $array_files, $message = "")
+    public function wallPostWithPict($group_id, $array_files, $message = "", $like = false)
     {
         $server = $this->vkClient->photos()->getWallUploadServer($this->accessToken);
         $attachment = "";
@@ -124,13 +123,36 @@ class VkClient
         else
             $post_id = $response['post_id'];
 
-        $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
-            'type' => 'post',
-            'owner_id' => $group_id > 0 ? -$group_id : $group_id,
-            'item_id' => (int)$post_id,
-        ]);
+        if ($like)
+            $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+                'type' => 'post',
+                'owner_id' => $group_id > 0 ? -$group_id : $group_id,
+                'item_id' => (int)$post_id,
+            ]);
 
         return $post_id;
+    }
+
+    public function wallPostWithPictAndRepost($group_id, $array_files, $message = "", $repost_message = "", $like = false, $like_repost = false)
+    {
+        $post_id = $this->wallPostWithPict($group_id, $array_files, $message);
+
+        $params = [
+            'object' => 'wall'.($group_id > 0 ? -$group_id : $group_id).'_'.$post_id,
+            'message' => $repost_message,
+        ];
+
+        $response = $this->vkClient->wall()->repost($this->accessToken, $params);
+
+        if ($like_repost)
+        {
+            $likeResponse = $this->vkClient->likes()->add($this->accessToken, [
+                'type' => 'post',
+                'item_id' => $response['post_id'],
+            ]);
+        }
+
+        return $response;
     }
 
     public function wallPostWithVideo($group_id, $videoName, $path, $description = "", $message = "")
