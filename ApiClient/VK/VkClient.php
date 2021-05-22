@@ -195,7 +195,7 @@ class VkClient
             'extended' => 0,
         ]);
 
-        return $response;
+        return $response['count'];
     }
 }
 
