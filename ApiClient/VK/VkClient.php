@@ -155,10 +155,10 @@ class VkClient
         return $response;
     }
 
-    public function wallPostWithVideo($group_id, $videoName, $path, $description = "", $message = "", $like = false)
+    public function wallPostWithVideo($group_id, $video_name, $path, $description = "", $message = "", $like = false)
     {
         $videoInfo = $this->vkClient->video()->save($this->accessToken, [
-            'name' => $videoName,
+            'name' => $video_name,
             #'wallpost' => 1,
             'description' => $description,
             'group_id' => $group_id,
@@ -191,9 +191,9 @@ class VkClient
         return $post_id;
     }
 
-    public function wallPostWithVideoAndRepost($group_id, $videoName, $path, $description = "", $message = "", $repost_message = "", $like = false, $like_repost = false)
+    public function wallPostWithVideoAndRepost($group_id, $video_name, $path, $description = "", $message = "", $repost_message = "", $like = false, $like_repost = false)
     {
-        $post_id = $this->wallPostWithVideo($group_id, $videoName, $path, $description, $message);
+        $post_id = $this->wallPostWithVideo($group_id, $video_name, $path, $description, $message);
 
         $params = [
             'object' => 'wall'.($group_id > 0 ? -$group_id : $group_id).'_'.$post_id,
