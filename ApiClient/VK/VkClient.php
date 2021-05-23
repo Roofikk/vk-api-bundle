@@ -255,9 +255,10 @@ class VkClient
         ]);
 
         $story_id = $response['items'][0]['id'];
+
         if ($reply)
         {
-            $storyInfo = $this->vkClient->stories()->getPhotoUploadServer($this->accessToken, [
+            $storyInfo = $this->vkClient->stories()->getVideoUploadServer($this->accessToken, [
                 'add_to_news' => 1,
                 'reply_to_story' => ($group_id > 0 ? -$group_id : $group_id)."_".$story_id,
             ]);
