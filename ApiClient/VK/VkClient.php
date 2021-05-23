@@ -27,7 +27,7 @@ class VkClient
     protected $vkClient;
 
     /**
-     * RussianPostClient constructor.
+     * VkClient constructor.
      * @param string $token
      */
     public function __construct(string $token)
